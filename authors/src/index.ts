@@ -1,10 +1,10 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
+import { buildSubgraphSchema } from "@apollo/subgraph";
 import cors from "cors";
 import express from "express";
-import gql from "graphql-tag";
 import { readFileSync } from "fs";
-import { buildSubgraphSchema } from "@apollo/subgraph";
+import gql from "graphql-tag";
 
 type Author = {
   id: string;

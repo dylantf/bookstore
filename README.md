@@ -4,7 +4,7 @@ Directories are:
 
 - `router/`: Contains the router gateway and supergraph
 - `authors/`: Contains subgraph A (authors, books)
-- (todo) add another a subgraph
+- `publishers/`: Contains subgraph B (extension of author, publisher)
 
 ### Installation:
 
@@ -22,4 +22,5 @@ From within the `router/` directory, run `bun run supergraph:compose`. The super
   - From within `router/`, run `bun start`
 - Authors subgraph:
   - From within `authors/`, run `bun start`
-- TODO second subgraph
+- Publishers subgraph:
+  - From within `publishers/`, run `bun start`

@@ -4,7 +4,7 @@ subgraphs:
     routing_url: http://localhost:4001/graphql
     schema:
       file: ../authors/src/schema.graphql
-  # people:
-  #   routing_url: https://people.example.com
-  #   schema:
-  #     file: ./people.graphql
+  publishers:
+    routing_url: http://localhost:4002/graphql
+    schema:
+      file: ../publishers/src/schema.graphql
