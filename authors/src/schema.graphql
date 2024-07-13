@@ -7,18 +7,8 @@ extend schema
 type Author @shareable @key(fields: "id") {
   id: ID!
   name: String!
-  books: [Book!]!
-}
-
-type Book {
-  id: ID!
-  title: String!
-  published: Int!
-  authorId: ID!
-  author: Author!
 }
 
 type Query {
   authors: [Author!]!
-  books: [Book!]!
 }

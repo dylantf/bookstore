@@ -10,7 +10,7 @@ type Author @key(fields: "id") {
   publisher: Publisher
 }
 
-type Publisher {
+type Publisher @shareable @key(fields: "id") {
   id: ID!
   name: String!
   authors: [Author!]!
