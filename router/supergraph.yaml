@@ -8,3 +8,7 @@ subgraphs:
     routing_url: http://localhost:4002/graphql
     schema:
       file: ../publishers/src/schema.graphql
+  books:
+    routing_url: http://127.0.0.1:4003/graphql
+    schema:
+      file: ../books/schema.graphql

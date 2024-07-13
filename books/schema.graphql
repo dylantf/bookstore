@@ -1,0 +1,61 @@
+schema @link(url: "https:\/\/specs.apollo.dev\/federation\/v2.3", import: ["@key", "@shareable", "@provides", "@requires", "@external", "@tag", "@extends", "@override", "@inaccessible", "@composeDirective", "@interfaceObject"]) {
+  query: RootQueryType
+}
+
+type RootQueryType @extends {
+  """
+  The _service field on the query root returns SDL
+  which includes all of the service's types (after any non-federation transforms),
+  as well as federation directive annotations on the fields and types.
+  The federation schema modifications (i.e. new types and directive definitions)
+  should not be included in this SDL.
+  """
+  _service: _Service!
+
+  """
+  Returns a non-nullable list of _Entity types
+  and have a single argument with an argument name of representations
+  and type [_Any!]! (non-nullable list of non-nullable _Any scalars).
+  The _entities field on the query root must allow a list of _Any scalars
+  which are "representations" of entities from external services.
+  These representations should be validated with the following rules:
+
+  - Any representation without a __typename: String field is invalid.
+  - Representations must contain at least the fields defined in the fieldset of a @key directive on the base type.
+  """
+  _entities(representations: [_Any!]!): [_Entity]!
+
+  books: [Book]
+}
+
+type Author @extends @key(fields: "id") {
+  id: ID!
+  books: [Book]
+}
+
+type Book @shareable @key(fields: "id") {
+  id: ID!
+  title: String!
+  authorId: ID! @shareable
+  published: Int
+  publisherId: ID
+}
+
+"The _Any scalar is used to pass representations of entities from external services into the root _entities field for execution."
+scalar _Any
+
+"""
+Schema composition at the gateway requires having each service's schema, annotated with its federation configuration.
+This information is fetched from each service using _service, an enhanced introspection entry point added to the
+query root of each federated service.
+"""
+type _Service {
+  """
+  This SDL (schema definition language) is a printed version of the service's schema including the annotations of
+  federation directives. This SDL does not include the additions of the federation spec.
+  """
+  sdl: String
+}
+
+"a union of all types that use the @key directive"
+union _Entity = Author | Book

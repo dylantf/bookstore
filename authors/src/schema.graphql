@@ -9,6 +9,12 @@ type Author @shareable @key(fields: "id") {
   name: String!
 }
 
+type Book @key(fields: "id") {
+  id: ID!
+  authorId: ID! @shareable
+  author: Author!
+}
+
 type Query {
   authors: [Author!]!
 }

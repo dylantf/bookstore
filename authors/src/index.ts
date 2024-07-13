@@ -19,14 +19,52 @@ const authors: Author[] = [
   { id: "5", name: "Wyatt" },
 ];
 
+type Book = {
+  id: string;
+  authorId: string;
+};
+
+// Minimal representation of books, even though the type is not defined here.
+// In real life we'd make a dataloader to load these references from the db if needed.
+const books: Book[] = [
+  { id: "1", authorId: "1" },
+  { id: "2", authorId: "2" },
+  { id: "3", authorId: "3" },
+  { id: "4", authorId: "4" },
+  { id: "5", authorId: "3" },
+  { id: "6", authorId: "5" },
+  { id: "7", authorId: "5" },
+  { id: "8", authorId: "5" },
+  { id: "9", authorId: "5" },
+];
+
+type AuthorEntity = {
+  __typename: "Author";
+  id: string;
+};
+
+type BookEntity = {
+  __typename: "Book";
+  id: string;
+  authorId: string;
+};
+
 const resolvers = {
-  // Book: {
-  //   author: (parent: Book) => {
-  //     return authors.find(author => author.id === parent.authorId);
-  //   },
-  // },
   Query: {
     authors: () => authors,
+  },
+  Author: {
+    __resolveReference(authorRef: AuthorEntity) {
+      return authors.find(author => author.id === authorRef.id);
+    },
+  },
+  Book: {
+    __resolveReference(bookRef: BookEntity) {
+      return books.find(book => book.id === bookRef.id);
+    },
+    author(parent: Book) {
+      return authors.find(author => author.id === parent.authorId);
+    },
   },
 };
 

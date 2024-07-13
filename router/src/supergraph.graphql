@@ -21,29 +21,33 @@ directive @link(url: String, as: String, for: link__Purpose, import: [link__Impo
 
 type Author
   @join__type(graph: AUTHORS, key: "id")
+  @join__type(graph: BOOKS, key: "id", extension: true)
   @join__type(graph: PUBLISHERS, key: "id")
 {
   id: ID!
   name: String! @join__field(graph: AUTHORS)
-  books: [Book!]! @join__field(graph: AUTHORS)
+  books: [Book] @join__field(graph: BOOKS)
   publisherId: ID @join__field(graph: PUBLISHERS)
   publisher: Publisher @join__field(graph: PUBLISHERS)
 }
 
 type Book
-  @join__type(graph: AUTHORS)
+  @join__type(graph: AUTHORS, key: "id")
+  @join__type(graph: BOOKS, key: "id")
 {
   id: ID!
-  title: String!
-  published: Int!
   authorId: ID!
-  author: Author!
+  author: Author! @join__field(graph: AUTHORS)
+  title: String! @join__field(graph: BOOKS)
+  published: Int @join__field(graph: BOOKS)
+  publisherId: ID @join__field(graph: BOOKS)
 }
 
 scalar join__FieldSet
 
 enum join__Graph {
   AUTHORS @join__graph(name: "authors", url: "http://localhost:4001/graphql")
+  BOOKS @join__graph(name: "books", url: "http://127.0.0.1:4003/graphql")
   PUBLISHERS @join__graph(name: "publishers", url: "http://localhost:4002/graphql")
 }
 
@@ -62,7 +66,7 @@ enum link__Purpose {
 }
 
 type Publisher
-  @join__type(graph: PUBLISHERS)
+  @join__type(graph: PUBLISHERS, key: "id")
 {
   id: ID!
   name: String!
@@ -71,9 +75,10 @@ type Publisher
 
 type Query
   @join__type(graph: AUTHORS)
+  @join__type(graph: BOOKS)
   @join__type(graph: PUBLISHERS)
 {
   authors: [Author!]! @join__field(graph: AUTHORS)
-  books: [Book!]! @join__field(graph: AUTHORS)
+  books: [Book] @join__field(graph: BOOKS)
   publishers: [Publisher!]! @join__field(graph: PUBLISHERS)
 }

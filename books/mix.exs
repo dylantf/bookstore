@@ -59,7 +59,8 @@ defmodule Books.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:absinthe_plug, "~> 1.5"}
+      {:absinthe_plug, "~> 1.5"},
+      {:absinthe_federation, "~> 0.5"}
     ]
   end
 
@@ -81,7 +82,8 @@ defmodule Books.MixProject do
         "tailwind books --minify",
         "esbuild books --minify",
         "phx.digest"
-      ]
+      ],
+      sdl: ["absinthe.federation.schema.sdl --schema BooksWeb.Graphql.Schema ./schema.graphql"]
     ]
   end
 end
