@@ -29,5 +29,5 @@ app.get("/graphiql", (req, res) => {
 app.use("/graphql", expressMiddleware(apolloServer));
 
 app.listen(4000, () => {
-  console.log("Running Authors subgraph on http://localhost:4000");
+  console.log("Running Router Gateway on http://localhost:4000");
 });
