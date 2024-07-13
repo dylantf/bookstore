@@ -2,10 +2,10 @@ An attempt at setting up a federated GraphQL server, containing a local gateway 
 
 Directories are:
 
-- `router/`: Contains the router gateway and supergraph
-- `authors/`: Contains subgraph A (Authors, extension of Book)
-- `publishers/`: Contains subgraph B (Publisher, extension of Author)
-- `books/`: Contains subgraph B (Book, extension of Author)
+- `router/`: (NodeJS) Contains the router gateway and supergraph
+- `authors/`: (NodeJS) Contains subgraph A (Authors, extension of Book)
+- `publishers/`: (NodeJS) Contains subgraph B (Publisher, extension of Author)
+- `books/`: (Elixir/Absinthe) Contains subgraph B (Book, extension of Author)
 
 ### Installation:
 
